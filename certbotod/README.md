@@ -4,6 +4,17 @@
 
 The certbotod script automates the management of SSL certificates. It supports renewing existing certificates and creating new ones, with options for self-signed certificates and self-verification.
 
+## Installation
+
+```Bash
+# Download the file
+wget -O /usr/local/bin/certbotod https://raw.githubusercontent.com/wiexon/dfiles/main/certbotod/certbotod.sh
+
+# Make the file executable
+chmod +x /usr/local/bin/certbotod
+```
+Alternatively you can clone the project and run `sh install-certbotod.sh`
+
 ## Usage
 
 ```Bash
