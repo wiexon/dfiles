@@ -221,7 +221,8 @@ verify_fqdn() {
   echo "Valid FQDN: $domain_name"
 }
 
-DOC_NET="$2"
+parse_args n "$@"
+DOC_NET=$VAR_INPUT
 set_doc_net() {
   # If the second argument is provided, use it as the network name
   if [[ -n "$DOC_NET" ]]; then
