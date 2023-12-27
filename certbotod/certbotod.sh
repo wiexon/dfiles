@@ -144,6 +144,8 @@ EOF
 
   cat ${DOMAIN}.crt ${DOMAIN}.key > ${DOMAIN}.pem
 
+  # Create the cert directory if not exists
+  mkdir -p "$CERT_DIR"
   # Move the PEM file to the desired directory and set permissions
   mv ${DOMAIN}.pem "$CERT_DIR"
   chmod 600 "$CERT_DIR/${DOMAIN}.pem"
