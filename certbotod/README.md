@@ -12,6 +12,7 @@ wget -O /usr/local/bin/certbotod https://raw.githubusercontent.com/wiexon/dfiles
 
 # Make the file executable
 chmod +x /usr/local/bin/certbotod
+
 ```
 Alternatively you can clone the project and run `sh install-certbotod.sh`
 

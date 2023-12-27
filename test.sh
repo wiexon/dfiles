@@ -1,23 +1,19 @@
-parse_args() {
-  while getopts ":s:" opt; do
-    case $opt in
-      s)
-        VARIABLE_INPUT="$OPTARG"
-        echo $VARIABLE_INPUT
-        ;;
-      \?)
-        echo "Invalid option: -$OPTARG" >&2
-        exit 1
-        ;;
-      :)
-        echo "Option -$OPTARG requires an argument." >&2
-        exit 1
-        ;;
-    esac
-  done
+verify_fqdn() {
+  domain_name="$1"
 
-  shift $((OPTIND-1))
+  # Check for valid characters and structure
+  if [[ ! "$domain_name" =~ ^[a-z0-9.-]+$ ]]; then
+    echo "Invalid characters in domain name."
+    exit 1
+  fi
+
+  # Ensure at least one dot and a top-level domain
+  if [[ ! "$domain_name" =~ \. || ! "$domain_name" =~ \.[a-z]{2,}$ ]]; then
+    echo "Invalid domain name format. Must be a fully qualified domain name (FQDN)."
+    exit 1
+  fi
+
+  echo "Valid FQDN: $domain_name"
 }
-
-parse_args "$@"
-parse_args "$@"
+ff="aman.com"
+verify_fqdn $ff
