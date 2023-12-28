@@ -97,3 +97,5 @@ openssl x509 -req \
     -sha256 -extfile cert.conf
 
 cat ${DOMAIN}.crt ${DOMAIN}.key > ${DOMAIN}.pem
+# Concatenate the domain certificate and root CA certificate to create the fullchain file
+cat ${DOMAIN}.crt rootCA.crt > ${DOMAIN}.fullchain.pem
