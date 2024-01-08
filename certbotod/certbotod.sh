@@ -105,7 +105,7 @@ distinguished_name = dn
 C = US
 ST = Texus
 L = Houston
-O = Wiexon LLC
+O = Dummy Company
 OU = DevOps
 CN = ${DOMAIN}
 
@@ -171,7 +171,7 @@ create_deploy_hook() {
 
   if [[ ! -f "$file_path" ]]; then
     mkdir -p $file_location
-    cat <<EOF > "$file_path"
+    cat > "$file_path" <<"EOF"
 #!/bin/sh
 
 # Set the path to the Let's Encrypt lineage directory
@@ -229,7 +229,7 @@ set_doc_net() {
     echo "updating the default docker network to $DOC_NET"
   else
     # Otherwise, set the default network name
-    DOC_NET="wiexon"
+    DOC_NET="intranet"
   fi
 
   # Check if the Docker network exists

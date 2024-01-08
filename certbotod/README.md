@@ -6,15 +6,11 @@ The certbotod script automates the management of SSL certificates. It supports r
 
 ## Installation
 
-```Bash
-# Download the file
-wget -O /usr/local/bin/certbotod https://raw.githubusercontent.com/wiexon/dfiles/main/certbotod/certbotod.sh
-
-# Make the file executable
-chmod +x /usr/local/bin/certbotod
-
+```shell
+curl -sSL https://raw.githubusercontent.com/wiexon/dfiles/main/certbotod/install.sh | sh
 ```
-Alternatively you can clone the project and run `sh install-certbotod.sh`
+
+Alternatively you can clone the project and run `sh install.sh`
 
 ## Usage
 
