@@ -268,6 +268,7 @@ renew_cert() {
 
 check_docker_installed
 set_doc_net
+mkdir -p /etc/letsencrypt/live-pem
 
 if [[ $1 == "renew" ]]; then
   renew_cert
