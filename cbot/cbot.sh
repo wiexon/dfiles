@@ -31,7 +31,7 @@ EOF
 process_common_name(){
   #input="-d example.com -d www.example.com -d 210.10.10.40"
   local input="$*"
-  COMNAME=$(echo $input | grep -oE '^\-d\s+[A-Za-z0-9\-\.\_]+' | awk '{ print $2 }')
+  COMNAME=$(echo $input | grep -oE '^\-d\s+[A-Za-z0-9\-\.\_\*]+' | awk '{ print $2 }')
 }
 
 process_alt_names(){
@@ -41,7 +41,7 @@ process_alt_names(){
 
   # Use grep to find all occurrences of '-d' followed by a string
   local matches
-  matches=$(echo "$input" | grep -oE '\-d\s+[A-Za-z0-9\-\.\_]+')
+  matches=$(echo "$input" | grep -oE '\-d\s+[A-Za-z0-9\-\.\_\*]+')
 
   local index_dns=1
   local index_ip=1
