@@ -234,7 +234,7 @@ set_doc_net() {
 }
 
 new_cert() {
-  process_common_name
+  process_common_name "$DOMAINS"
   local CERT_NAME=$COMNAME
 
   docker run -it --rm --name certbot --network $DOCNET -v "$VOLUME:/etc/letsencrypt" -v "/var/log/letsencrypt:/var/log/letsencrypt" $DOCEPORT certbot/certbot certonly --standalone --cert-name $CERT_NAME $DOMAINS
