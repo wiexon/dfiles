@@ -240,8 +240,8 @@ new_cert() {
   docker run -it --rm --name certbot --network $DOCNET -v "$VOLUME:/etc/letsencrypt" -v "/var/log/letsencrypt:/var/log/letsencrypt" $DOCEPORT certbot/certbot certonly --standalone --cert-name $CERT_NAME $DOMAINS
 
   if [[ $? -eq 0 ]]; then  # Check if certificate issuance was successful
-    rm -rf /etc/letsencrypt/rclive/$CERT_NAME.pem
-    cat /etc/letsencrypt/live/$CERT_NAME/fullchain.pem /etc/letsencrypt/live/$CERT_NAME/privkey.pem > /etc/letsencrypt/rclive/$CERT_NAME.pem
+    rm -rf $VOLUME/rclive/$CERT_NAME.pem
+    cat $VOLUME/live/$CERT_NAME/fullchain.pem $VOLUME/live/$CERT_NAME/privkey.pem > $VOLUME/rclive/$CERT_NAME.pem
     docker kill --signal=HUP $HAPROXY_DCN || true
   else
     echo "Failed to issue certificate for $CERT_NAME."
