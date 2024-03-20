@@ -3,6 +3,7 @@
 # Function to display help message
 usage() {
   cat << EOF
+
 Usage: $0 [OPTION [ARGUMENT]] COMMAND
 
   Options:
