@@ -152,7 +152,7 @@ EOF
   # Move the PEM file to the desired directory and set permissions
   rm -rf "$CERT_DIR/${DOMAIN}.pem"
   mv "${DOMAIN}.pem" "$CERT_DIR"
-  chmod 600 "$CERT_DIR/${DOMAIN}.pem"
+  chmod 644 "$CERT_DIR/${DOMAIN}.pem"
 
   popd || exit 0
 }
