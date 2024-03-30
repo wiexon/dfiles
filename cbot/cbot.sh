@@ -362,6 +362,11 @@ elif [[ "$CMD" = "renew" ]]; then
   set_doc_net
   create_deploy_hook
   renew_cert
+elif [[ "$CMD" = "delete" ]]; then
+  echo "deleting certificate"
+  check_docker_installed
+  set_doc_net
+  delete_cert
 else
   echo "Invalid command: '$CMD'" >&2
   usage
