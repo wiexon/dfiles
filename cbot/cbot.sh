@@ -14,16 +14,19 @@ Usage: $0 [OPTION [ARGUMENT]] COMMAND
   -n <DockerNetwork>  Specify the Docker network name to use (default: intranet).
   -v <DockerVolume>   Specify the Docker volume or directory location to store Let's Encrypt data (default: /etc/letsencrypt).
   -p                  Open port 80 temporarily for domain verification.
+  -c <CertName>       Certificate Name
   -H <HAProxyDocName> Specify the HAProxy Docker Container name
 
   Commands:
 
   new                 Issue a new certificate.
   renew               Renew existing certificates.
+  delete              Delete existing certificate.
 
   Example:
   $0 -d example.com -n intranet -v /bsse/letsencrypt -p new
   $0 -n intranet -v /base/letsencrypt -p renew
+  $0 -c example.com -n intranet -v /base/letsencrypt delete
 
 EOF
   exit 1
@@ -254,6 +257,13 @@ renew_cert() {
   docker kill --signal=HUP $HAPROXY_DCN || true
 }
 
+delete_cert() {
+  docker run -it --rm --name certbot --network $DOCNET -v "$VOLUME:/etc/letsencrypt" -v "/var/log/letsencrypt:/var/log/letsencrypt" $DOCEPORT certbot/certbot delete --cert-name $CERTCNAME
+  rm -rf $VOLUME/rclive/$CERTCNAME.pem
+  rm -rf $VOLUME/sscerts/$CERTCNAME
+  docker kill --signal=HUP $HAPROXY_DCN || true
+}
+
 
 # Initialize variables and scanning flags and agruments
 DOMAINS=""
@@ -261,8 +271,9 @@ SELFSIGNED=false
 DOCNET=intranet
 VOLUME=/etc/letsencrypt
 DOCEPORT=""
+CERTCNAME=""
 HAPROXY_DCN="haproxy"
-while getopts ":hspd:n:v:H:" opt; do
+while getopts ":hspd:n:v:c:H:" opt; do
   case $opt in
     h)
       usage
@@ -301,6 +312,13 @@ while getopts ":hspd:n:v:H:" opt; do
         exit 1
       fi
       DOCEPORT="-p 80:80"
+      ;;
+    c)
+      if [ -z "$OPTARG" ]; then
+        echo "Error: -c argument requires a certificate name"
+        exit 1
+      fi
+      CERTCNAME="$OPTARG"
       ;;
     H)
       if [ -z "$OPTARG" ]; then
@@ -344,6 +362,11 @@ elif [[ "$CMD" = "renew" ]]; then
   set_doc_net
   create_deploy_hook
   renew_cert
+elif [[ "$CMD" = "delete" ]]; then
+  echo "deleting certificate"
+  check_docker_installed
+  set_doc_net
+  delete_cert
 else
   echo "Invalid command: '$CMD'" >&2
   usage
