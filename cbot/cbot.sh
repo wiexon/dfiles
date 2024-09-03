@@ -253,7 +253,7 @@ new_cert() {
 }
 
 renew_cert() {
-  docker run -it --rm --name certbot --network $DOCNET -v "$VOLUME:/etc/letsencrypt" -v "/var/log/letsencrypt:/var/log/letsencrypt" $DOCEPORT certbot/certbot renew
+  docker run --rm --name certbot --network $DOCNET -v "$VOLUME:/etc/letsencrypt" -v "/var/log/letsencrypt:/var/log/letsencrypt" $DOCEPORT certbot/certbot renew
   docker kill --signal=HUP $HAPROXY_DCN || true
 }
 
